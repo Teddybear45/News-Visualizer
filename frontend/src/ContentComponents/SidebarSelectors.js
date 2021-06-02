@@ -9,12 +9,12 @@ class SidebarSelectors extends Component {
         return (
             <div className="SidebarSelectors-main-section">
                 
-                <div>Search holder</div>
-                <div>Search holder</div>
-                <div>Search holder</div>
-
-                <h4>Select By News Source </h4>
                 
+
+                <h4>News Sources: </h4>
+
+                <h5>Articles From: </h5>
+                {/* Past 3 days, 1 week, 3 weeks, 1 month */}
 
             </div>
         )
