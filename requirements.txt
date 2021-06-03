@@ -17,7 +17,9 @@ lxml==4.6.3
 MarkupSafe==2.0.1
 newspaper3k==0.2.8
 nltk==3.6.2
+numpy==1.20.3
 Pillow==8.2.0
+protobuf==3.17.2
 python-dateutil==2.8.1
 PyYAML==5.4.1
 regex==2021.4.4
@@ -26,8 +28,11 @@ requests-file==1.5.1
 sgmllib3k==1.0.0
 six==1.16.0
 soupsieve==2.2.1
+stanza==1.2
 tinysegmenter==0.3
 tldextract==3.1.0
+torch==1.8.1
 tqdm==4.61.0
+typing-extensions==3.10.0.0
 urllib3==1.26.5
 Werkzeug==2.0.1
