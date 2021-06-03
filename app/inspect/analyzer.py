@@ -12,3 +12,10 @@ def parse_paper(passed_article):
 
     print(elapsed_time)
 
+
+
+
+
+
+if __name__ == '__main__':
+    parse_paper(Article("http://cnn.com/2021/05/31/sport/australia-softball-olympics-spt-intl/index.html"))
