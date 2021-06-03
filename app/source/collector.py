@@ -32,11 +32,14 @@ config = Config()
 config.memoize_articles = False
 config.fetch_images = False
 
+
 def collect():
     start_time = time.time()
 
     # builds paper from news source list. constant build time of articles
     papers = [newspaper.build(paper, config=config) for paper in paper_list]
+
+    print(time.time() - start_time)
 
     cnn_articles = source_cnn_collect("http://cnn.com")
 
@@ -64,7 +67,7 @@ def source_cnn_collect(cnn_link):
     date_format = "/" + str(d.year) + "/" + '{:02d}'.format(d.month) + "/" + '{:02d}'.format(d.day)
 
     for article in source_paper.articles:
-        if "cnn.com" + date_format in article.url:
+        if cnn_link + date_format in article.url:
             articles.append(article)
             article.download()
 
