@@ -1,6 +1,7 @@
 import datetime
 
 import newspaper
+import stanza
 from newspaper import news_pool, Config
 import time
 
@@ -22,22 +23,26 @@ paper_list = [
     'https://www.cbsnews.com/',  # CBS
     'https://apnews.com/',  # AP
     'https://www.nytimes.com/',  # NYT
-    'https://www.wsj.com/',  # WSJ
+    # 'https://www.wsj.com/',  # WSJ // Not extracting
     'https://www.washingtonpost.com/',  # WP
     'https://www.bbc.com/news',  # BBC
 
 ]
 
-config = Config()
-config.memoize_articles = False
-config.fetch_images = False
+
+def get_config():
+    config = Config()
+    config.memoize_articles = False
+    config.fetch_images = False
+
+    return config
 
 
 def collect():
     start_time = time.time()
 
     # builds paper from news source list. constant build time of articles
-    papers = [newspaper.build(paper, config=config) for paper in paper_list]
+    papers = [newspaper.build(paper, config=get_config()) for paper in paper_list]
 
     print(time.time() - start_time)
 
@@ -50,18 +55,24 @@ def collect():
 
     print(time.time() - start_time)
 
+    article_list = []
+
     for paper in papers:
         for article in paper.articles:
             print(article.url)
+            article_list.append(article)
 
     for article in cnn_articles:
         print(article.url)
+        article_list.append(article)
 
     print(time.time() - start_time)
 
+    return article_list
+
 
 def source_cnn_collect(cnn_link):
-    source_paper = newspaper.build(cnn_link, config=config)
+    source_paper = newspaper.build(cnn_link, config=get_config())
     articles = []
     d = datetime.date.today()
     date_format = "/" + str(d.year) + "/" + '{:02d}'.format(d.month) + "/" + '{:02d}'.format(d.day)

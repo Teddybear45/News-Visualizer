@@ -3,43 +3,36 @@ from newspaper import Article
 import stanza
 import time
 
+from app.source.collector import get_config
+
+# pass in already downloaded
 def parse_paper(passed_article):
     start_time = time.time()
 
-    passed_article.download()
+    # passed_article.download()
     print(time.time() - start_time)
-
 
     passed_article.parse()
     print(time.time() - start_time)
 
-    upper_words = []
-
-    #takes uppercase starting
-    for word in passed_article.text.split():
-        if word[0].isupper():
-            upper_words.append(word)
-
-    return "".join(word + " " for word in upper_words)
+    return passed_article.text
 
 
-
-
-
-def nlp_paper(document):
+def process_paper(document, pipeline):
     start_time = time.time()
 
-    locs = []
+    locs = set()
 
-    nlp = stanza.Pipeline(lang='en', processors='tokenize,ner')
+
     print(time.time() - start_time)
 
-    doc = nlp(document)
+    doc = pipeline(document)
 
-    print(doc)
+    # print(doc)
     for element in doc.ents:
-        if element.type == "LOC":
-            locs.append(element.text)
+        print(element)
+        if element.type == "LOC" or element.type == "GPE":
+            locs.add(element.text)
 
     print(time.time() - start_time)
 
@@ -48,15 +41,11 @@ def nlp_paper(document):
 
 
 
-
 if __name__ == '__main__':
-    config = Config()
-    config.memoize_articles = False
-    config.fetch_images = False
 
 
-    # print(parse_paper(Article("http://cnn.com/2021/05/31/sport/australia-softball-olympics-spt-intl/index.html", config=config)))
+    nlp_pipline = stanza.Pipeline(lang='en', processors='tokenize,ner')
 
-    nlp_paper("The Aussie Spirit, Australian Japan Tokyo Olympics Sydney Monday. The Ota City Japan July Olympic Having February Aussie Spirit, Olympic Japan, Japanese Olympics Japanese Jade Wall. Read More ")
-
+    print(process_paper(parse_paper(
+        Article("http://cnn.com/2021/05/31/sport/australia-softball-olympics-spt-intl/index.html", config=get_config())), pipeline=nlp_pipline))
 
