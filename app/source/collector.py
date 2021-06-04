@@ -30,14 +30,16 @@ paper_list = [
 ]
 
 
+# config for newspaper build
 def get_config():
     config = Config()
-    config.memoize_articles = False
+    config.memoize_articles = True
     config.fetch_images = False
 
     return config
 
 
+# collects newspapers into newspaper Article objects
 def collect():
     start_time = time.time()
 
@@ -71,6 +73,7 @@ def collect():
     return article_list
 
 
+# CNN special collect to filter out other languages and only take today's articles
 def source_cnn_collect(cnn_link):
     source_paper = newspaper.build(cnn_link, config=get_config())
     articles = []

@@ -1,4 +1,5 @@
 beautifulsoup4==4.9.3
+branca==0.4.2
 certifi==2021.5.30
 chardet==4.0.0
 click==8.0.1
@@ -11,6 +12,7 @@ feedfinder2==0.0.4
 feedparser==6.0.2
 filelock==3.0.12
 Flask==2.0.1
+folium==0.12.1
 geographiclib==1.50
 geopy==2.1.0
 idna==2.10
