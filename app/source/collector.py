@@ -26,6 +26,7 @@ paper_list = [
     # 'https://www.wsj.com/',  # WSJ // Not extracting
     'https://www.washingtonpost.com/',  # WP
     'https://www.bbc.com/news',  # BBC
+    # 'https://abcnews.go.com/', # ABC
 
 ]
 
@@ -46,16 +47,11 @@ def collect():
     # builds paper from news source list. constant build time of articles
     papers = [newspaper.build(paper, config=get_config()) for paper in paper_list]
 
-    print(time.time() - start_time)
-
     cnn_articles = source_cnn_collect("http://cnn.com")
 
-    print(time.time() - start_time)
 
     news_pool.set(papers, threads_per_source=10)
     news_pool.join()
-
-    print(time.time() - start_time)
 
     article_list = []
 

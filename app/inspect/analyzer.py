@@ -2,19 +2,15 @@ from newspaper import Article
 import stanza
 import time
 
+
 from app.source.collector import get_config
 
 
 # pass in already downloaded Articles and returns text body
 def parse_paper(passed_article):
-    start_time = time.time()
-
-
-    passed_article.download() # download for test run
-    print(time.time() - start_time)
+    # passed_article.download() # download for test run
 
     passed_article.parse()
-    print(time.time() - start_time)
 
     return passed_article.text
 
@@ -42,3 +38,4 @@ if __name__ == '__main__':
     print(process_paper(parse_paper(
         Article("http://cnn.com/2021/05/31/sport/australia-softball-olympics-spt-intl/index.html",
                 config=get_config())), pipeline=nlp_pipline))
+
