@@ -7,32 +7,6 @@ import os
 from folium import plugins
 from folium.plugins import HeatMap
 
-#TODO put icon layer into index
-# var icon = L.AwesomeMarkers.icon({icon: 'paper-plane', prefix: 'fa', markerColor: 'blue', iconColor: 'white'});
-def plot_map(full_query_map):
-    folium_map = folium.Map(location=[59.338315, 18.089960],
-                            zoom_start=3,
-                            tiles='CartoDBdark_matter')
-    loc_map = []
-
-    for loc in full_query_map.keys():
-        if loc is not None:
-            loc_map.append(tuple(loc.split(",")))
-
-
-    FastMarkerCluster(data=loc_map, name="Cluster View", icons=folium.Icon(color="red",icon="hamburger", prefix='fa')).add_to(folium_map)
-    folium.LayerControl().add_to(folium_map)
-
-    popup_content = []
-
-    for key in full_query_map:
-        print(key)
-
-
-
-    folium_map.save("index.html")
-
-
 def map_plot_cluster_reg(folium_map, full_query_map):
     locations = []
 
@@ -43,23 +17,30 @@ def map_plot_cluster_reg(folium_map, full_query_map):
             loc_split[1] = float(loc_split[1])
             locations.append(tuple(loc_split))
 
-    icons = [folium.Icon(icon="car", prefix="fa") for _ in range(len(locations))]
-
+    icons = [folium.Icon(icon="paper-plane", prefix="fa", color="purple") for _ in range(len(locations))]
+    popups_frame = []
     popup_content = []
     for coord in full_query_map:
-        ner_loc = "Location: {}<br>".format(full_query_map[coord][0])
-        articles = "Articles: {}".format(full_query_map[coord][1])
+        ner_loc = "<span>Location: {}</span> <br>".format(full_query_map[coord][0])
+        links_content = ""
+        for link in full_query_map[coord][1]:
+            links_content += "<a href = \"{0}\" target=\"_blank\">{0} ,</a> <br>".format(link)
 
+        articles = links_content
         content = ner_loc + articles
-        popup_content.append(content)
 
-    popups = [folium.Popup(content) for content in popup_content]
+        frame = folium.IFrame(content)
+        frame_content_popup = folium.Popup(frame, min_width=350, max_width=450)
 
-    cluster = MarkerCluster(locations=locations, icons=icons, popups=popups)
+        popups_frame.append(frame_content_popup)
+
+    # popups = [folium.Popup(content) for content in popup_content]
+
+    cluster = MarkerCluster(locations=locations, icons=icons, popups=popups_frame)
 
     folium_map.add_child(cluster)
 
-    folium_map.save("reg-cluster-map.html")
+    folium_map.save("index.html")
 
 
 def append_heat_map_layer(folium_map, query_map):
@@ -67,7 +48,7 @@ def append_heat_map_layer(folium_map, query_map):
     for key in query_map:
         if key is not None:
             coords = key.split(",")
-            data_element = [float(coords[0]), float(coords[1]), len(query_map[key][1])]
+            data_element = [float(coords[0]), float(coords[1]), 1 + len(query_map[key][1]) * 0.6]
             data.append(data_element)
 
     print(data)
@@ -75,7 +56,7 @@ def append_heat_map_layer(folium_map, query_map):
     HeatMap(data).add_to(folium.FeatureGroup(name='Heat Map').add_to(folium_map))
     folium.LayerControl().add_to(folium_map)
 
-    folium_map.save("reg-cluster-map.html")
+    folium_map.save("index.html")
 
 
 
