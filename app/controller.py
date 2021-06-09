@@ -17,6 +17,6 @@ def hello(name=None):
     return render_template('hello.html', name=name)
 
 
-
+# only send coords and name, not urls until requested
 
 

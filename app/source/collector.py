@@ -84,5 +84,3 @@ def source_cnn_collect(cnn_link):
     return articles
 
 
-if __name__ == '__main__':
-    collect()

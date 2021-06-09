@@ -28,14 +28,5 @@ def process_paper(document, pipeline):
 
     return locs
 
-def check_ner_res(type):
-    pass
 
-
-if __name__ == '__main__':
-    nlp_pipline = stanza.Pipeline(lang='en', processors='tokenize,ner')
-
-    print(process_paper(parse_paper(
-        Article("http://cnn.com/2021/05/31/sport/australia-softball-olympics-spt-intl/index.html",
-                config=get_config())), pipeline=nlp_pipline))
 

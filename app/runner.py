@@ -6,6 +6,8 @@ from app.inspect.analyzer import parse_paper, process_paper
 from app.inspect.geolocator import geo_map
 from app.source.collector import collect, get_config
 
+import csv
+
 if __name__ == '__main__':
     article_list = collect()
     print(article_list)
@@ -31,3 +33,8 @@ if __name__ == '__main__':
 
     print(query_map)
 
+
+    with open("current_vals.csv", "w") as outfile:
+        writer = csv.writer(outfile)
+        for key, val in query_map.items():
+            writer.writerow([key, val])

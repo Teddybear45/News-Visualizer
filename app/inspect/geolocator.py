@@ -25,16 +25,7 @@ def geo_map(loc_article_map, geocode_element):
 
 
 
-if __name__ == '__main__':
-    locator = geopy.geocoders.Nominatim(user_agent="NewsMapper")
-    geocode = RateLimiter(locator.geocode, min_delay_seconds=1)
 
-    test_dict = {
-        "Florida": ["url.something.com, another.com"],
-        "Seattle": ["some.other.seattle.com, cool.source.org"]
-    }
-
-    print(geo_map(test_dict, geocode))
 
 
 
