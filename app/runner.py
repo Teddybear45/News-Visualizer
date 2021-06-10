@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     try:
         query_map.pop(None)
-    except:
+    except KeyError:
         print("-- All recognized --")
 
     print(query_map)
