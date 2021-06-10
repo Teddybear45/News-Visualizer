@@ -14,6 +14,5 @@ def process_paper(document, pipeline):
     for element in doc.ents:
         if element.type == "LOC" or element.type == "GPE":
             locs.add(element.text)
-            print(element.text)
 
     return locs

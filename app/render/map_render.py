@@ -3,6 +3,7 @@ from folium.plugins import MarkerCluster
 import folium
 from folium.plugins import HeatMap
 
+
 # maps and saves to index.html cluster items given coord, location, article map. markers include popup
 def map_plot_cluster_reg(folium_map, full_query_map):
     locations = []
@@ -36,17 +37,17 @@ def map_plot_cluster_reg(folium_map, full_query_map):
 
     folium_map.save("index.html")
 
+
 # adds heat map layer to cluster or regular map
 def append_heat_map_layer(folium_map, query_map):
     data = []
     for key in query_map:
         if key is not None:
             coords = key.split(",")
-            data_element = [float(coords[0]), float(coords[1]), 1 + len(query_map[key][1]) * 0.6]
+            data_element = [float(coords[0]), float(coords[1]), len(query_map[key][1])]
             data.append(data_element)
 
     HeatMap(data).add_to(folium.FeatureGroup(name='Heat Map').add_to(folium_map))
     folium.LayerControl().add_to(folium_map)
 
     folium_map.save("index.html")
-

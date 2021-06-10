@@ -66,14 +66,10 @@ def collect():
 
     for paper in papers:
         for article in paper.articles:
-            print(article.url)
             article_list.append(article)
 
     for article in cnn_articles:
-        print(article.url)
         article_list.append(article)
-
-    print(time.time() - start_time)
 
     return article_list
 
