@@ -1,11 +1,6 @@
-import time
-
 import pandas as pd
-import geopy
-import matplotlib.pyplot as plt
-from geopy.extra.rate_limiter import RateLimiter
 
-
+# returns map of location names to coordinates. takes location names and articles map
 def geo_map(loc_article_map, geocode_element):
     geo_loc_article_map = {}
 
@@ -18,8 +13,6 @@ def geo_map(loc_article_map, geocode_element):
 
     for name, loc in zip(df.get('name_token'), df.get('point')):
         geo_loc_article_map[loc] = (name, loc_article_map[name])
-
-    print(df)
 
     return geo_loc_article_map
 

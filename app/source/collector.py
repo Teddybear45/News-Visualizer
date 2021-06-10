@@ -5,6 +5,7 @@ import stanza
 from newspaper import news_pool, Config
 import time
 
+# sources
 """
 CNN: Use /year/month/day for articles
 CBS: /news
@@ -13,20 +14,29 @@ NYT: /year/month/day
 WSJ: /news
 WP: / *Hard to filter
 BBC: /news
+ABC: .go.com/SECTION/SECTION || TITLE *Hard to filter
+The Atlantic: latest/SECTION/archive/year/month
+NBC: /SECTION
 
 
 """
 
 # list of sources to map
 paper_list = [
-    # 'https://cnn.com',  # CNN
+    # 'https://cnn.com',  # CNN / Separate finder
+    # 'https://www.wsj.com/',  # WSJ // Not extracting
     'https://www.cbsnews.com/',  # CBS
     'https://apnews.com/',  # AP
     'https://www.nytimes.com/',  # NYT
-    # 'https://www.wsj.com/',  # WSJ // Not extracting
     'https://www.washingtonpost.com/',  # WP
     'https://www.bbc.com/news',  # BBC
-    # 'https://abcnews.go.com/', # ABC
+    'https://abcnews.go.com/',  # ABC
+    'https://www.theatlantic.com/',  # The Atlantic
+    'https://www.nbcnews.com/latest-stories',  # NBC
+    'https://www.usatoday.com/',  # USA Today
+    'https://www.theguardian.com/us',  # The Guardian
+    'https://time.com/',  # TIME
+    'https://www.npr.org/',  # NPR
 
 ]
 
@@ -46,9 +56,8 @@ def collect():
 
     # builds paper from news source list. constant build time of articles
     papers = [newspaper.build(paper, config=get_config()) for paper in paper_list]
-
+    # separate CNN collect
     cnn_articles = source_cnn_collect("http://cnn.com")
-
 
     news_pool.set(papers, threads_per_source=10)
     news_pool.join()
@@ -82,5 +91,3 @@ def source_cnn_collect(cnn_link):
             article.download()
 
     return articles
-
-

@@ -1,17 +1,8 @@
-from newspaper import Article
-import stanza
-import time
-
-
-from app.source.collector import get_config
-
-
 # pass in already downloaded Articles and returns text body
 def parse_paper(passed_article):
     # passed_article.download() # download for test run
 
     passed_article.parse()
-
     return passed_article.text
 
 
@@ -25,8 +16,4 @@ def process_paper(document, pipeline):
             locs.add(element.text)
             print(element.text)
 
-
     return locs
-
-
-
